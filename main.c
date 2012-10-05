@@ -39,10 +39,38 @@ int	init_shm(t_env* env)
 	env->status = 0;
 }
 
-int	init_term(t_env* env)
+void	init_cadre(t_env* env)
+{
+	int	x;
+	int	y;
+	int	count;
+
+	x = 0;
+	while (x < env->w)
+	{
+		tputs(tgoto(env->cm, x, 4), 1, id_put);
+		write(1, ".", 1);
+		tputs(tgoto(env->cm, x, env->h - 1), 1, id_put);
+		write(1, ".", 1);
+		x = x + 1;
+	}
+	y = 5;
+	while (y < env->h - 1)
+	{
+		tputs(tgoto(env->cm, 0, y), 1, id_put);
+		write(1, "#", 1);
+		tputs(tgoto(env->cm, env->w, y), 1, id_put);
+		write(1, "#", 1);
+		y = y + 1;
+	}
+}
+
+int	init_env(t_env* env)
 {
 	char* termtype;
+	int	success;
 
+	success = tgetent (0, termtype);
 	termtype = getenv("TERM");
 	tgetent(0, termtype);
 	env->w = tgetnum("co");
@@ -53,15 +81,17 @@ int	init_term(t_env* env)
 }
 int	init(t_env* env)
 {
-	init_term(env);
+	if (init_env(env))
+		return (1);
 	tputs(env->cl, 1, id_put);
 	init_shm(env);
+	init_cadre(env);
 	
 }
 
 void	run_child(t_env* env, int i)
 {
-	printf("%c Ready\n",i + 'A');
+	printf("%c Ready\n", i + 'A');
 }
 
 void	run_referee(t_env* env)
@@ -90,6 +120,7 @@ int	run(t_env* env)
 int	main(void)
 {
 	t_env env;
+
 	init(&env);
 	run(&env);
 	
