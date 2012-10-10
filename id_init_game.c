@@ -17,6 +17,42 @@ int	init_shm(t_env* env)
 	return (0);
 }
 
+void	init_struct_position(t_env* env, t_position* pos)
+{
+	t_position*	begin;
+	int		x;
+	int		y;
+
+	begin = pos;
+	x = 2;
+	y = 2;
+	while (x != env->w - 1 && y != env->h - 1)
+	{
+		while (x != env->w - 1);
+		{
+			pos->x = x;
+			pos->y = y;
+			pos->next = (t_position*)malloc(sizeof(*pos));
+			pos = pos->next;
+			x = x + 1;
+		}
+		x = 2;
+		y = y + 1;
+	}
+}
+
+void	init_position(t_env* env, t_level* level)
+{
+	level->player1.x = env->w / 3;
+	level->player1.y = env->h / 2;
+	tputs(tgoto(env->cm, level->player1.x, level->player1.y), 1, id_put);
+	id_print_str("\033[01;46m ");
+	level->player2.x = (env->w / 3) * 2;
+	level->player2.y = env->h / 2;
+	tputs(tgoto(env->cm, level->player2.x, level->player2.y), 1, id_put);
+	id_print_str("\033[01;46m ");
+}
+
 void	init_cadre(t_env* env)
 {
 	int	x;
