@@ -8,7 +8,7 @@
 
 int	init_shm(t_env* env)
 {
-	env->shmid = shmget(4224, (env->w * env->h * sizeof(char)) + sizeof(int),
+	env->shmid = shmget(4224, sizeof(t_player),
 				   IPC_CREAT | 0700);
 	env->shmaddr = shmat(env->shmid, 0, 0);
 	env->status = env->shmaddr;

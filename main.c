@@ -17,19 +17,32 @@ int	init(t_env* env)
 
 int	run(t_env* env)
 {
-	int	i;
 	int	ret;
-
+	int	i;
+	t_player	*test;
+	t_player	*shm;
+	ret = 0;
 	i = 0;
-	while (i < 2)
-	{
+
 		ret = fork();
-		if (ret == 0)
+		
+		env->shmid = shmget(4224, sizeof(t_player), 0700);
+		shm = shmat(env->shmid, NULL, 0);
+		test = shm;
+		test->x = 10;
+		test->y = 11;
+	if (ret != 0)
+	{
+		while (i != 20)
 		{
-			return 0;
-		}
+		test = shm;
+		test->x = test->x + 1;
+		test->y = test->y + 1;
 		i = i + 1;
+		}
 	}
+		printf("ALORS %d %d\n",test->x,test->y);
+
 	return (0);
 }
 int	main(void)
