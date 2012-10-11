@@ -1,5 +1,7 @@
 #include <unistd.h>
 
+int	check_pos(
+
 int	id_put(int c)
 {
 	char	d;

@@ -35,11 +35,13 @@ void	init_struct_position(t_env* env, t_position* pos)
 			pos->next = (t_position*)malloc(sizeof(*pos));
 			pos = pos->next;
 			x = x + 1;
+			pos->value = 0;
 		}
 		x = 2;
 		y = y + 1;
 	}
 	pos->next = 0;
+	pos = begin;
 }
 
 void	init_position(t_env* env, t_level* level)

@@ -19,13 +19,14 @@ int	init(t_env* env, t_level* level, t_position* pos)
 
 int	run(t_env* env)
 {
-	int	ret;
-	int	i;
+	int		ret;
+	int		i;
+	int		value_pos;
 	t_player	*test;
 	t_player	*shm;
+
 	ret = 0;
 	i = 0;
-
 	ret = fork();
 	env->shmid = shmget(4224, sizeof(t_player), 0700);
 	shm = shmat(env->shmid, NULL, 0);
@@ -42,6 +43,7 @@ int	run(t_env* env)
 			i = i + 1;
 		}
 	}
+	value_pos = check_pos(level, pos);
 	return (0);
 }
 

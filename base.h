@@ -11,6 +11,7 @@ typedef struct	s_position
 {
 	int			x;
 	int			y;
+	int			value;
 	struct	s_position*	next;
 }		t_position;
 
