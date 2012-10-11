@@ -11,8 +11,8 @@ typedef struct	s_position
 {
 	int			x;
 	int			y;
-	struct	s_position*	next
-}		t_position
+	struct	s_position*	next;
+}		t_position;
 
 typedef struct	s_level
 {

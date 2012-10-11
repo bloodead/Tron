@@ -39,6 +39,7 @@ void	init_struct_position(t_env* env, t_position* pos)
 		x = 2;
 		y = y + 1;
 	}
+	pos->next = 0;
 }
 
 void	init_position(t_env* env, t_level* level)

@@ -13,7 +13,7 @@ int	init(t_env* env, t_level* level, t_position* pos)
 	init_shm(env);
 	init_cadre(env);
 	init_position(env, level);
-	init_struct_position(t_env* env, t_position* pos)
+	init_struct_position(env, pos);
 	return (0);
 }
 
