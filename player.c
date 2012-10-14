@@ -3,11 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-
 void	init_player(t_env* env)
 {
-	t_level	*level;
+	t_level*	level;
 
 	level = env->shmaddr;
 	level->player1.x = env->w / 3;
@@ -23,7 +21,6 @@ void	init_player(t_env* env)
 	tputs(tgoto(env->cm, level->player2.x, level->player2.y), 1, id_put);
 	id_print_str("\033[01;46m ");
 }
-
 
 void	move_player(t_env* env, int i)
 {
@@ -44,8 +41,7 @@ void	move_player(t_env* env, int i)
 
 void	refresh_pos(t_env* env)
 {
-
-	t_level	*level;
+	t_level*	level;
 
 	level = env->shmaddr;
 	tputs(tgoto(env->cm, level->player1.x, level->player1.y), 1, id_put);

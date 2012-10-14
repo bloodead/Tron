@@ -20,20 +20,20 @@ int	init(t_env* env)
 
 int	run(t_env* env)
 {
-	int	ret;
-	int	status;
-	int	i;
+	int		ret;
+	int		status;
+	int		i;
 	t_player	save;
 
 	i = 0;
 	while (i < 2)
 	{
-	ret = fork();
-	if (ret == 0)
-	{
-		move_player(env, i);
-		return 10;
-	}
+		ret = fork();
+		if (ret == 0)
+		{
+			move_player(env, i);
+			return 10;
+		}
 		i = i + 1;
 	}
 	waitpid(ret, &status, 0);
@@ -41,18 +41,18 @@ int	run(t_env* env)
 	refresh_pos(env);
 	save_pos(&save);
 	check_coll(env);
-
 	return (0);
 }
+
 int	main(void)
 {
-	t_env env;
+	t_env	env;
 
 	init(&env);
 	while (1)
 	{
-	if (run(&env) == 10)
-		return 0;
+		if (run(&env) == 10)
+			return 0;
 	}
 	shmctl(env.shmid, IPC_RMID, 0);
 	return (0);
