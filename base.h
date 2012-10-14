@@ -36,4 +36,5 @@ int	id_put(int c);
 int	init_shm(t_env* env);
 void	init_cadre(t_env* env);
 int	init_env(t_env* env);
+void	id_print_str(char* str); 
 #endif

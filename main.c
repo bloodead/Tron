@@ -23,7 +23,7 @@ int	run(t_env* env)
 	int		ret;
 	int		status;
 	int		i;
-	t_player	save;
+	//t_player	save;
 
 	i = 0;
 	while (i < 2)
@@ -39,7 +39,7 @@ int	run(t_env* env)
 	waitpid(ret, &status, 0);
 	usleep(50000);
 	refresh_pos(env);
-	save_pos(&save);
+	//save_pos(&save);
 	check_coll(env);
 	return (0);
 }
