@@ -3,58 +3,57 @@
 #include <stdio.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include "base.h"
 
-int	init(t_env* env, t_level* level, t_position* pos)
+int	init(t_env* env)
 {
 	init_env(env);
 	tputs(env->cl, 1, id_put);
 	init_shm(env);
 	init_cadre(env);
-	init_position(env, level);
-	init_struct_position(env, pos);
+	init_player(env);
 	return (0);
 }
 
 int	run(t_env* env)
 {
-	int		ret;
-	int		i;
-	int		value_pos;
-	t_player	*test;
-	t_player	*shm;
+	int	ret;
+	int	status;
+	int	i;
+	t_player	save;
 
-	ret = 0;
 	i = 0;
-	ret = fork();
-	env->shmid = shmget(4224, sizeof(t_player), 0700);
-	shm = shmat(env->shmid, NULL, 0);
-	test = shm;
-	test->x = 10;
-	test->y = 11;
-	if (ret != 0)
+	while (i < 2)
 	{
-		while (i != 20)
-		{
-			test = shm;
-			test->x = test->x + 1;
-			test->y = test->y + 1;
-			i = i + 1;
-		}
+	ret = fork();
+	if (ret == 0)
+	{
+		move_player(env, i);
+		return 10;
 	}
-	value_pos = check_pos(level, pos);
+		i = i + 1;
+	}
+	waitpid(ret, &status, 0);
+	usleep(50000);
+	refresh_pos(env);
+	save_pos(&save);
+	check_coll(env);
+
 	return (0);
 }
-
 int	main(void)
 {
-	t_env		env;
-	t_level		level;
-	t_position	pos;
+	t_env env;
 
-	init(&env, &level, &pos);
-	run(&env);
-	
+	init(&env);
+	while (1)
+	{
+	if (run(&env) == 10)
+		return 0;
+	}
+	shmctl(env.shmid, IPC_RMID, 0);
 	return (0);
 }
